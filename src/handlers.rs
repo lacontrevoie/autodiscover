@@ -8,6 +8,7 @@ use crate::helpers::*;
 
 #[get("/mail/config-v1.1.xml")]
 pub async fn autoconfig() -> Result<HttpResponse> {
+    debug_mode("autoconfig", None, None);
     HttpResponse::Ok()
         .content_type("text/xml")
         .body(
@@ -21,6 +22,7 @@ pub async fn autoconfig() -> Result<HttpResponse> {
 #[get("/Autodiscover/Autodiscover.json")]
 pub async fn autodiscover_json() 
 -> Result<HttpResponse> {
+    debug_mode("autodiscover_json", None, None);
     HttpResponse::Ok()
         .content_type("application/json")
         .body(
@@ -37,6 +39,7 @@ pub async fn autodiscover_json()
 pub async fn mobileconfig(
     getdata: web::Query<HashMap<String, String>>,
 ) -> Result<HttpResponse> {
+    debug_mode("autodiscover_json", Some(getdata.clone()), None);
     let email = get_email_address(None, getdata.into_inner());
 
     HttpResponse::Ok()
@@ -57,6 +60,7 @@ pub async fn mobileconfig(
 pub async fn autodiscover_xml_get(
     getdata: web::Query<HashMap<String, String>>,
 ) -> Result<HttpResponse> {
+    debug_mode("autodiscover_xml_get", Some(getdata.clone()), None);
     let schema = get_schema(None);
     let email = get_email_address(None, getdata.into_inner());
 
@@ -79,6 +83,7 @@ pub async fn autodiscover_xml_post(
     postdata: web::Form<AutoDiscoverRequest>,
     getdata: web::Query<HashMap<String, String>>,
 ) -> Result<HttpResponse> {
+    debug_mode("autodiscover_xml_post", Some(getdata.clone()), Some(postdata.clone()));
     let schema = get_schema(Some(postdata.clone()));
     let email = get_email_address(Some(postdata.into_inner()), getdata.into_inner());
 

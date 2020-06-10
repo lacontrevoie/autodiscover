@@ -16,7 +16,9 @@ use crate::handlers::*;
 async fn main() -> std::io::Result<()> {
     println!("Reading configuration file...");
     println!("Autodiscover running for {}", &CONFIG.general.full_name);
-    println!("Hello, world!");
+    if CONFIG.general.debug_mode {
+        println!("Debug mode enabled ! Every query will be printed out.");
+    }
     HttpServer::new(move || App::new()
         .service(autoconfig)
         .service(autodiscover_xml_get)

@@ -60,6 +60,7 @@ pub struct ConfigGeneral {
     pub full_name: String,
     pub short_name: String,
     pub support_url: String,
+    pub debug_mode: bool,
 }
 
 #[derive(Deserialize)]

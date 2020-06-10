@@ -1,5 +1,20 @@
-use crate::structs::*;
 use std::collections::HashMap;
+
+use crate::structs::*;
+use crate::config::*;
+
+pub fn debug_mode(fn_name: &str, getdata: Option<HashMap<String, String>>,
+    postdata: Option<AutoDiscoverRequest>) {
+    if CONFIG.general.debug_mode {
+        println!("Received request from {}", fn_name);
+        if let Some(v) = getdata {
+            println!("GET query parameters: {:?}", v);
+        }
+        if let Some(v) = postdata {
+            println!("POST query parameters: {:?}", v);
+        }
+    }
+}
 
 pub fn get_schema(postdata: Option<AutoDiscoverRequest>) -> String {
     let default_sch = "http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a";

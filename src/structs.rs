@@ -31,7 +31,7 @@ pub struct AutoDiscoverJson {
 }
 
 #[allow(non_snake_case)]
-#[derive(Serialize, Deserialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct AutoDiscoverRequest {
     pub EMailAddress: Option<String>,
     pub AcceptableResponseSchema: Option<String>,
