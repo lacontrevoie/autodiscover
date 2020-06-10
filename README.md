@@ -31,6 +31,18 @@ You have to create a lot of DNS records to make autodiscovery work for all clien
 
 All of those entries should be recorded on your main domain.
 
+```
+autoconfig           86400 IN CNAME  autodiscover.42l.fr.
+autodiscover         86400 IN A      185.216.27.142
+_imap._tcp           86400 IN SRV    0 0 143 mail.42l.fr.
+_imaps._tcp          86400 IN SRV    0 0 993 mail.42l.fr.
+_pop3._tcp           86400 IN SRV    0 0 110 mail.42l.fr.
+_pop3s._tcp          86400 IN SRV    0 0 995 mail.42l.fr.
+_smtp._tcp           86400 IN SRV    0 0 25 mail.42l.fr.
+_smtps._tcp          86400 IN SRV    0 0 465 mail.42l.fr.
+_submission._tcp     86400 IN SRV    0 0 587 mail.42l.fr.
+```
+
 (To complete)
 
 #### On a "customer" domain
