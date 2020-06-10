@@ -7,7 +7,7 @@ support_url = "https://42l.fr/Service-mail"
 
 [autodiscover]
 enabled = true
-# The socket/virtual host used by this service
+# The socket/virtual host serving this service
 address = "https://autodiscover.42l.fr"
 # TTL in hours
 ttl = 48
