@@ -1,0 +1,80 @@
+[general]
+listening_address = "0.0.0.0:8000"
+domain = "42l.fr"
+full_name = "Association 42l"
+short_name = "42l"
+support_url = "https://42l.fr/Service-mail"
+
+[autodiscover]
+enabled = true
+# The socket/virtual host which provides /autoconfig/autoconfig.xml 
+address = "https://autoconfig.42l.fr"
+# TTL in hours
+ttl = 48
+
+[autoconfig]
+enabled = true
+support_descr = "Guide on using the 42l mail service"
+
+# Information about the fields below
+# login: "Localpart" (abc) or "EmailDom" (abc@mydomain.fr)
+# encryption: "None", "SSL" or "StartTLS"
+# microsoft_password_encryption: to use proprietary SPA protocol
+# standard_password_encryption: to use CRAM-MD5 for password auth
+# If you are unsure about this information, leave the default values
+
+[imap]
+enabled = true
+port = 143
+login = "EmailDom"
+encryption = "starttls"
+microsoft_password_encryption = false
+standard_password_encryption = false
+
+[imaps]
+enabled = true
+port = 993
+login = "EmailDom"
+encryption = "ssl"
+microsoft_password_encryption = false
+standard_password_encryption = false
+
+[pop]
+enabled = true
+port = 110
+login = "EmailDom"
+encryption = "starttls"
+microsoft_password_encryption = false
+standard_password_encryption = false
+
+[pops]
+enabled = true
+port = 995
+login = "EmailDom"
+encryption = "ssl"
+microsoft_password_encryption = false
+standard_password_encryption = false
+
+[smtp]
+enabled = false
+port = 25
+login = "EmailDom"
+encryption = "none"
+microsoft_password_encryption = false
+standard_password_encryption = false
+
+[smtps]
+enabled = false
+port = 465
+login = "EmailDom"
+encryption = "ssl"
+microsoft_password_encryption = false
+standard_password_encryption = false
+
+[submission]
+enabled = true
+port = 587
+login = "EmailDom"
+encryption = "starttls"
+microsoft_password_encryption = false
+standard_password_encryption = false

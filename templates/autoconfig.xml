@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<clientConfig version="1.1">
+    <emailProvider id="{{ c.general.domain }}">
+        <domain>{{ c.general.domain }}</domain>
+        <displayName>{{ c.general.full_name }}</displayName>
+        <displayShortName>{{ c.general.short_name }}</displayShortName>
+        {%- if c.imap.enabled %}
+        <incomingServer type="imap">
+            <hostname>{{ c.general.domain }}</hostname>
+            <port>{{ c.imap.port }}</port>
+            <socketType>{{ c.imap.encryption|upper }}</socketType>
+            {% if c.imap.standard_password_encryption %}
+            <authentication>password-encrypted</authentication>
+            {%- else -%}
+            <authentication>password-cleartext</authentication>
+            {% endif %}
+            {%- match c.imap.login -%}
+              {%- when LoginType::Localpart -%}
+            <username>%EMAILLOCALPART%</username>
+              {%- when LoginType::EmailDom -%}
+            <username>%EMAILADDRESS%</username>
+            {%- endmatch %}
+        </incomingServer>
+        {%- endif -%}
+        {% if c.imaps.enabled %}
+        <incomingServer type="imap">
+            <hostname>{{ c.general.domain }}</hostname>
+            <port>{{ c.imaps.port }}</port>
+            <socketType>{{ c.imaps.encryption|upper }}</socketType>
+            {% if c.imaps.standard_password_encryption %}
+            <authentication>password-encrypted</authentication>
+            {%- else -%}
+            <authentication>password-cleartext</authentication>
+            {% endif %}
+            {%- match c.imaps.login -%}
+              {%- when LoginType::Localpart -%}
+            <username>%EMAILLOCALPART%</username>
+              {%- when LoginType::EmailDom -%}
+            <username>%EMAILADDRESS%</username>
+            {%- endmatch %}
+        </incomingServer>
+        {%- endif -%}
+        {% if c.pop.enabled %}
+        <incomingServer type="pop">
+            <hostname>{{ c.general.domain }}</hostname>
+            <port>{{ c.pop.port }}</port>
+            <socketType>{{ c.pop.encryption|upper }}</socketType>
+            {% if c.pop.standard_password_encryption %}
+            <authentication>password-encrypted</authentication>
+            {%- else -%}
+            <authentication>password-cleartext</authentication>
+            {% endif %}
+            {%- match c.pop.login -%}
+              {%- when LoginType::Localpart -%}
+            <username>%EMAILLOCALPART%</username>
+              {%- when LoginType::EmailDom -%}
+            <username>%EMAILADDRESS%</username>
+            {%- endmatch %}
+        </incomingServer>
+        {%- endif -%}
+        {% if c.pops.enabled %}
+        <incomingServer type="pop">
+            <hostname>{{ c.general.domain }}</hostname>
+            <port>{{ c.pops.port }}</port>
+            <socketType>{{ c.pops.encryption|upper }}</socketType>
+            {% if c.pops.standard_password_encryption %}
+            <authentication>password-encrypted</authentication>
+            {%- else -%}
+            <authentication>password-cleartext</authentication>
+            {% endif %}
+            {%- match c.pops.login -%}
+              {%- when LoginType::Localpart -%}
+            <username>%EMAILLOCALPART%</username>
+              {%- when LoginType::EmailDom -%}
+            <username>%EMAILADDRESS%</username>
+            {%- endmatch %}
+        </incomingServer>
+        {%- endif -%}
+        {% if c.smtp.enabled %}
+        <outgoingServer type="smtp">
+            <hostname>{{ c.general.domain }}</hostname>
+            <port>{{ c.smtp.port }}</port>
+            <socketType>{{ c.smtp.encryption|upper }}</socketType>
+            {% if c.smtp.standard_password_encryption %}
+            <authentication>password-encrypted</authentication>
+            {%- else -%}
+            <authentication>password-cleartext</authentication>
+            {% endif %}
+            {%- match c.smtp.login -%}
+              {%- when LoginType::Localpart -%}
+            <username>%EMAILLOCALPART%</username>
+              {%- when LoginType::EmailDom -%}
+            <username>%EMAILADDRESS%</username>
+            {%- endmatch %}
+        </outgoingServer>
+        {%- endif -%}
+        {% if c.smtps.enabled %}
+        <outgoingServer type="smtp">
+            <hostname>{{ c.general.domain }}</hostname>
+            <port>{{ c.smtps.port }}</port>
+            <socketType>{{ c.smtps.encryption|upper }}</socketType>
+            {% if c.smtps.standard_password_encryption %}
+            <authentication>password-encrypted</authentication>
+            {%- else -%}
+            <authentication>password-cleartext</authentication>
+            {% endif %}
+            {%- match c.smtps.login -%}
+              {%- when LoginType::Localpart -%}
+            <username>%EMAILLOCALPART%</username>
+              {%- when LoginType::EmailDom -%}
+            <username>%EMAILADDRESS%</username>
+            {%- endmatch %}
+        </outgoingServer>
+        {%- endif -%}
+        {% if c.submission.enabled %}
+        <outgoingServer type="smtp">
+            <hostname>{{ c.general.domain }}</hostname>
+            <port>{{ c.submission.port }}</port>
+            <socketType>{{ c.submission.encryption|upper }}</socketType>
+            {% if c.submission.standard_password_encryption %}
+            <authentication>password-encrypted</authentication>
+            {%- else -%}
+            <authentication>password-cleartext</authentication>
+            {% endif %}
+            {%- match c.submission.login -%}
+              {%- when LoginType::Localpart -%}
+            <username>%EMAILLOCALPART%</username>
+              {%- when LoginType::EmailDom -%}
+            <username>%EMAILADDRESS%</username>
+            {%- endmatch %}
+        </outgoingServer>
+        {%- endif %}
+        <documentation url="{{ c.general.support_url|safe }}">
+            <descr lang="en">{{ c.autoconfig.support_descr }}</descr>
+        </documentation>
+    </emailProvider>
+</clientConfig>

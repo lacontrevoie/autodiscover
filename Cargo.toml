@@ -1,0 +1,15 @@
+[package]
+name = "autodiscover"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lazy_static = "1.4"
+toml = "0.5"
+actix-web = "2.0"
+actix-rt = "1.0"
+askama = "0.9"
+serde = "1.0"
+serde_derive = "1.0"
