@@ -7,8 +7,8 @@ support_url = "https://42l.fr/Service-mail"
 
 [autodiscover]
 enabled = true
-# The socket/virtual host which provides /autoconfig/autoconfig.xml 
-address = "https://autoconfig.42l.fr"
+# The socket/virtual host used by this service
+address = "https://autodiscover.42l.fr"
 # TTL in hours
 ttl = 48
 
@@ -25,6 +25,7 @@ support_descr = "Guide on using the 42l mail service"
 
 [imap]
 enabled = true
+hostname = "42l.fr"
 port = 143
 login = "EmailDom"
 encryption = "starttls"
@@ -33,6 +34,7 @@ standard_password_encryption = false
 
 [imaps]
 enabled = true
+hostname = "42l.fr"
 port = 993
 login = "EmailDom"
 encryption = "ssl"
@@ -41,6 +43,7 @@ standard_password_encryption = false
 
 [pop]
 enabled = true
+hostname = "42l.fr"
 port = 110
 login = "EmailDom"
 encryption = "starttls"
@@ -49,6 +52,7 @@ standard_password_encryption = false
 
 [pops]
 enabled = true
+hostname = "42l.fr"
 port = 995
 login = "EmailDom"
 encryption = "ssl"
@@ -57,6 +61,7 @@ standard_password_encryption = false
 
 [smtp]
 enabled = false
+hostname = "42l.fr"
 port = 25
 login = "EmailDom"
 encryption = "none"
@@ -64,7 +69,8 @@ microsoft_password_encryption = false
 standard_password_encryption = false
 
 [smtps]
-enabled = false
+enabled = true
+hostname = "42l.fr"
 port = 465
 login = "EmailDom"
 encryption = "ssl"
@@ -73,6 +79,7 @@ standard_password_encryption = false
 
 [submission]
 enabled = true
+hostname = "42l.fr"
 port = 587
 login = "EmailDom"
 encryption = "starttls"

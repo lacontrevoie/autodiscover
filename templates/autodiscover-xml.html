@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Autodiscover xmlns="http://schemas.microsoft.com/exchange/autodiscover/responseschema/2006">
+    <Response xmlns="{{ schema }}">
+		<User>
+            <DisplayName>{{ email }}</DisplayName>
+        </User>
+        {% if c.imaps.enabled -%}
+		<Account>
+			<AccountType>email</AccountType>
+			<Action>settings</Action>
+			<Protocol>
+				<Type>IMAP</Type>
+				<TTL>1</TTL>
+				<Port>{{ c.imaps.port }}</Port>
+                <LoginName>{{ email }}</LoginName>
+                {%- match c.imaps.login -%}
+                  {%- when LoginType::Localpart -%}
+				<DomainRequired>off</DomainRequired>
+                  {%- when LoginType::EmailDom -%}
+				<DomainRequired>on</DomainRequired>
+                {%- endmatch %}
+                <DomainName>{{ c.imaps.hostname }}</DomainName>
+                {% if c.imaps.microsoft_password_encryption -%}
+                <SPA>on</SPA>
+                {% else -%}
+                <SPA>off</SPA>
+                {% endif -%}
+                {% if c.imaps.encryption|lower != "none" -%}
+                <SSL>on</SSL>
+                {% else -%}
+                <SSL>off</SSL>
+                {% endif -%}
+				<AuthRequired>on</AuthRequired>
+			</Protocol>
+        </Account>
+        {% endif -%}
+        {% if c.smtps.enabled -%}
+		<Account>
+			<AccountType>email</AccountType>
+			<Action>settings</Action>
+			<Protocol>
+				<Type>SMTP</Type>
+				<TTL>1</TTL>
+				<Port>{{ c.smtps.port }}</Port>
+                <LoginName>{{ email }}</LoginName>
+                {%- match c.smtps.login -%}
+                  {%- when LoginType::Localpart -%}
+				<DomainRequired>off</DomainRequired>
+                  {%- when LoginType::EmailDom -%}
+				<DomainRequired>on</DomainRequired>
+                {%- endmatch %}
+                <DomainName>{{ c.smtps.hostname }}</DomainName>
+                {% if c.smtps.microsoft_password_encryption -%}
+                <SPA>on</SPA>
+                {% else -%}
+                <SPA>off</SPA>
+                {% endif -%}
+                {% if c.smtps.encryption|lower != "none" -%}
+                <SSL>on</SSL>
+                {% else -%}
+                <SSL>off</SSL>
+                {% endif -%}
+				<AuthRequired>on</AuthRequired>
+			</Protocol>
+        </Account>
+        {% endif -%}
+	</Response>
+</Autodiscover>

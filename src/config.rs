@@ -78,6 +78,7 @@ pub struct ConfigAutoconfig {
 #[derive(Deserialize)]
 pub struct ConfigImap {
     pub enabled: bool,
+    pub hostname: String,
     pub port: u16,
     #[serde(deserialize_with = "deser_logintype")]
     pub login: LoginType,
@@ -90,6 +91,7 @@ pub struct ConfigImap {
 #[derive(Deserialize)]
 pub struct ConfigImaps {
     pub enabled: bool,
+    pub hostname: String,
     pub port: u16,
     #[serde(deserialize_with = "deser_logintype")]
     pub login: LoginType,
@@ -102,6 +104,7 @@ pub struct ConfigImaps {
 #[derive(Deserialize)]
 pub struct ConfigPop {
     pub enabled: bool,
+    pub hostname: String,
     pub port: u16,
     #[serde(deserialize_with = "deser_logintype")]
     pub login: LoginType,
@@ -114,6 +117,7 @@ pub struct ConfigPop {
 #[derive(Deserialize)]
 pub struct ConfigPops {
     pub enabled: bool,
+    pub hostname: String,
     pub port: u16,
     #[serde(deserialize_with = "deser_logintype")]
     pub login: LoginType,
@@ -126,6 +130,7 @@ pub struct ConfigPops {
 #[derive(Deserialize)]
 pub struct ConfigSmtp {
     pub enabled: bool,
+    pub hostname: String,
     pub port: u16,
     #[serde(deserialize_with = "deser_logintype")]
     pub login: LoginType,
@@ -138,6 +143,7 @@ pub struct ConfigSmtp {
 #[derive(Deserialize)]
 pub struct ConfigSmtps {
     pub enabled: bool,
+    pub hostname: String,
     pub port: u16,
     #[serde(deserialize_with = "deser_logintype")]
     pub login: LoginType,
@@ -150,6 +156,7 @@ pub struct ConfigSmtps {
 #[derive(Deserialize)]
 pub struct ConfigSubmission {
     pub enabled: bool,
+    pub hostname: String,
     pub port: u16,
     #[serde(deserialize_with = "deser_logintype")]
     pub login: LoginType,
