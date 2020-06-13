@@ -21,26 +21,34 @@ Git clone then build with Cargo, like a regular Rust application.
 
 ### The server
 
-Run the application on a virtual host on your server, like `autodiscover.example.com`. 
+Run the application on your server, then make it listen to those two virtual hosts:
+- autodiscover.mydomain.com
+- autoconfig.mydomain.com
+
+The best way to do so is to use a reverse proxy, which can also handle HTTPS.
 
 ### DNS records
 
 You have to create a lot of DNS records to make autodiscovery work for all clients. Be sure to double check every entry.
+
+- Replace `mydomain.com` with your own domain.
+- Replace `1.2.3.4` with your server's IP address.
 
 #### On the mail server's domain
 
 All of those entries should be recorded on your main domain.
 
 ```
-autoconfig           86400 IN CNAME  autodiscover.42l.fr.
-autodiscover         86400 IN A      185.216.27.142
-_imap._tcp           86400 IN SRV    0 0 143 mail.42l.fr.
-_imaps._tcp          86400 IN SRV    0 0 993 mail.42l.fr.
-_pop3._tcp           86400 IN SRV    0 0 110 mail.42l.fr.
-_pop3s._tcp          86400 IN SRV    0 0 995 mail.42l.fr.
-_smtp._tcp           86400 IN SRV    0 0 25 mail.42l.fr.
-_smtps._tcp          86400 IN SRV    0 0 465 mail.42l.fr.
-_submission._tcp     86400 IN SRV    0 0 587 mail.42l.fr.
+autoconfig           86400 IN CNAME  autodiscover.mydomain.com.
+autodiscover         86400 IN A      1.2.3.4
+_imap._tcp           86400 IN SRV    0 0 143 mail.mydomain.com.
+_imaps._tcp          86400 IN SRV    0 0 993 mail.mydomain.com.
+_pop3._tcp           86400 IN SRV    0 0 110 mail.mydomain.com.
+_pop3s._tcp          86400 IN SRV    0 0 995 mail.mydomain.com.
+_smtp._tcp           86400 IN SRV    0 0 25 mail.mydomain.com.
+_smtps._tcp          86400 IN SRV    0 0 465 mail.mydomain.com.
+_submission._tcp     86400 IN SRV    0 0 587 mail.mydomain.com.
+@                    86400 IN TXT    "mailconf=https://autodiscover.mydomain.com/mail/config-v1.1.xml"
 ```
 
 (To complete)
