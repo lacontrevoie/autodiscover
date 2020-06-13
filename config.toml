@@ -4,9 +4,6 @@ domain = "42l.fr"
 full_name = "Association 42l"
 short_name = "42l"
 support_url = "https://42l.fr/Service-mail"
-# Can help you to setup your service correctly.
-# Displays all received requests.
-debug_mode = false
 
 [autodiscover]
 enabled = true
