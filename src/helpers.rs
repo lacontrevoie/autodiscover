@@ -1,20 +1,38 @@
+use quick_xml::Reader;
+use quick_xml::events::Event;
+use actix_web::web::Bytes;
 use std::collections::HashMap;
+use std::io::Cursor;
 
 use crate::structs::*;
-use crate::config::*;
 
-pub fn debug_mode(fn_name: &str, getdata: Option<HashMap<String, String>>,
-    postdata: Option<AutoDiscoverRequest>) {
-    if CONFIG.general.debug_mode {
-        println!("Received request from {}", fn_name);
-        if let Some(v) = getdata {
-            println!("GET query parameters: {:?}", v);
+pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
+    let mut reader = Reader::from_reader(Cursor::new(data));
+    reader.trim_text(true);
+
+    let mut txt = Vec::new();
+    let mut buf = Vec::new();
+
+    // The `Reader` does not implement `Iterator` because it outputs borrowed data (`Cow`s)
+    loop {
+        match reader.read_event(&mut buf) {
+            Ok(Event::Text(e)) => txt.push(e.unescape_and_decode(&reader).unwrap()),
+            Ok(Event::Eof) => break AutoDiscoverRequest {
+                EMailAddress: match txt.get(0) {
+                    Some (a) => Some(a.to_owned()),
+                    None => None,
+                },
+                AcceptableResponseSchema: match txt.get(1) {
+                    Some (b) => Some(b.to_owned()),
+                    None => None,
+                },
+            }, // exits the loop when reaching end of file
+            Err(e) => panic!("Error at position {}: {:?}", reader.buffer_position(), e),
+            _ => (), // There are several other `Event`s we do not consider here
         }
-        if let Some(v) = postdata {
-            println!("POST query parameters: {:?}", v);
+        buf.clear();
         }
     }
-}
 
 pub fn get_schema(postdata: Option<AutoDiscoverRequest>) -> String {
     let default_sch = "http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a";

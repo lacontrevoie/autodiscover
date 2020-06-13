@@ -14,18 +14,17 @@ use crate::handlers::*;
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
+
     println!("Reading configuration file...");
     println!("Autodiscover running for {}", &CONFIG.general.full_name);
-    if CONFIG.general.debug_mode {
-        println!("Debug mode enabled ! Every query will be printed out.");
-    }
+    
     HttpServer::new(move || App::new()
         .service(autoconfig)
         .service(autodiscover_xml_get)
         .service(autodiscover_xml_post)
         .service(autodiscover_json)
         .service(mobileconfig)
-        )
+    )
         .bind(&CONFIG.general.listening_address)?
         .run()
         .await
