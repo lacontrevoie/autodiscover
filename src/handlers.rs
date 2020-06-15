@@ -7,14 +7,21 @@ use crate::structs::*;
 use crate::helpers::*;
 
 #[get("/mail/config-v1.1.xml")]
-pub async fn autoconfig() -> Result<HttpResponse> {
-    HttpResponse::Ok()
-        .content_type("text/xml")
-        .body(
+pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>)
+    -> Result<HttpResponse> {
+        let mut tpl = 
             AutoConfig { c: &CONFIG }
             .render()
-            .expect("Failed to render template"),
-        )
+            .expect("Failed to render template");
+        // support thunderbird's special gimmick
+        if let Some(addr) = getdata.get("emailaddress") {
+            tpl = tpl.replace("%EMAILADDRESS%", addr)
+                .replace("%EMAILLOCALPART%", addr.split('@').collect::<Vec<&str>>()[0]);
+        }
+
+    HttpResponse::Ok()
+        .content_type("text/xml")
+        .body(tpl)
         .await
 }
 
