@@ -60,7 +60,7 @@ pub async fn mobileconfig(
         .await
 }
 
-#[get("/Autodiscover/Autodiscover.xml")]
+#[get("/autodiscover/autodiscover.xml")]
 pub async fn autodiscover_xml_get(
     getdata: web::Query<HashMap<String, String>>,
 ) -> Result<HttpResponse> {
