@@ -11,7 +11,9 @@ Outlook uses an undocumented, proprietary protocol called **Autodiscover**, that
 Apple mobile phones uses the mobileconfig file which is again, poorly documented.
 
 ## Supported clients
-- (Not yet tested) Outlook clients, Thunderbird and free software alternatives (KDE mail clients), Apple Mail, Apple phone mail app
+- Thunderbird
+- Apple Mail
+- (Not yet tested) Outlook clients
 
 ## Setup
 
@@ -39,26 +41,29 @@ You have to create a lot of DNS records to make autodiscovery work for all clien
 All of those entries should be recorded on your main domain.
 
 ```
-autoconfig           86400 IN CNAME  autodiscover.mydomain.com.
-autodiscover         86400 IN A      1.2.3.4
-_imap._tcp           86400 IN SRV    0 0 143 mail.mydomain.com.
-_imaps._tcp          86400 IN SRV    0 0 993 mail.mydomain.com.
-_pop3._tcp           86400 IN SRV    0 0 110 mail.mydomain.com.
-_pop3s._tcp          86400 IN SRV    0 0 995 mail.mydomain.com.
-_smtp._tcp           86400 IN SRV    0 0 25 mail.mydomain.com.
-_smtps._tcp          86400 IN SRV    0 0 465 mail.mydomain.com.
-_submission._tcp     86400 IN SRV    0 0 587 mail.mydomain.com.
-@                    86400 IN TXT    "mailconf=https://autodiscover.mydomain.com/mail/config-v1.1.xml"
+autoconfig          86400 IN CNAME  autodiscover.mydomain.com.
+autodiscover        86400 IN CNAME  autodiscover.mydomain.com
+_imap._tcp          86400 IN SRV    0 0 143 mail.mydomain.com.
+_imaps._tcp         86400 IN SRV    0 0 993 mail.mydomain.com.
+_pop3._tcp          86400 IN SRV    0 0 110 mail.mydomain.com.
+_pop3s._tcp         86400 IN SRV    0 0 995 mail.mydomain.com.
+_smtp._tcp          86400 IN SRV    0 0 25 mail.mydomain.com.
+_smtps._tcp         86400 IN SRV    0 0 465 mail.mydomain.com.
+_submission._tcp    86400 IN SRV    0 0 587 mail.mydomain.com.
+_autodiscover._tcp  86400 IN SRV 	5 0 443 autodiscover.mydomain.com
 ```
-
-(To complete)
 
 #### On a "customer" domain
 
 Those entries should be added to any other domain using your mail server.
 
-(To complete)
+```
+autoconfig          86400 IN CNAME 	autodiscover.mydomain.com
+autodiscover        86400 IN CNAME 	autodiscover.mydomain.com
+_autodiscover._tcp  86400 IN SRV 	5 0 443 autodiscover.mydomain.com
+```
 
+You also need to generate a TLS certificate for each customer domain (specifically, for autoconfig and autodiscover subdomains).
 
 
 This project is fully and shamelessly inspired of the following projects:
