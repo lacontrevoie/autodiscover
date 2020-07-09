@@ -76,6 +76,11 @@ pub struct ConfigAutoconfig {
 }
 
 #[derive(Deserialize)]
+pub struct ConfigMobile {
+    pub description: String,
+}
+
+#[derive(Deserialize)]
 pub struct ConfigImap {
     pub enabled: bool,
     pub hostname: String,
@@ -171,6 +176,7 @@ pub struct Config {
     pub general: ConfigGeneral,
     pub autodiscover: ConfigAutodiscover,
     pub autoconfig: ConfigAutoconfig,
+    pub mobileconfig: ConfigMobile,
     pub imap: ConfigImap,
     pub imaps: ConfigImaps,
     pub pop: ConfigPop,

@@ -23,6 +23,9 @@ support_descr = "Guide on using the 42l mail service"
 # standard_password_encryption: to use CRAM-MD5 for password auth
 # If you are unsure about this information, leave the default values
 
+[mobileconfig]
+description = "Email configuration for 42l.fr's mail server"
+
 [imap]
 enabled = true
 hostname = "42l.fr"

@@ -8,7 +8,7 @@
 	<array>
 		<dict>
 			<key>EmailAccountDescription</key>
-			<string>{{ email }}</string>
+            <string>{{ c.mobileconfig.description|safe }}</string>
 			<key>EmailAccountName</key>
 			<string>{{ email }}</string>
 			<key>EmailAccountType</key>
@@ -42,7 +42,7 @@
 			<true/>
             {% endif -%}
 			<key>PayloadDescription</key>
-			<string>Configure Email Settings</string>
+            <string>{{ c.mobileconfig.description|safe }}</string>
 			<key>PayloadDisplayName</key>
 			<string>{{ email }}</string>
 			<key>PayloadIdentifier</key>
@@ -62,11 +62,11 @@
 		</dict>
 	</array>
 	<key>PayloadDescription</key>
-	<string>Configure Email Settings</string>
+    <string>{{ c.mobileconfig.description|safe }}</string>
 	<key>PayloadDisplayName</key>
 	<string>{{ email }}</string>
 	<key>PayloadIdentifier</key>
-	<string>fr.42l.fr.autodiscover</string>
+	<string>fr.42l.autodiscover</string>
 	<key>PayloadOrganization</key>
 	<string>{{ c.general.domain }}</string>
 	<key>PayloadRemovalDisallowed</key>
