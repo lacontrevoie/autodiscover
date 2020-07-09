@@ -1,4 +1,4 @@
-use actix_web::{get, post, web, http, HttpResponse, Result};
+use actix_web::{web, http, HttpResponse, Result};
 use askama::Template;
 use std::collections::HashMap;
 
@@ -24,7 +24,6 @@ pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>)
         .await
 }
 
-#[get("/autodiscover/autodiscover.json")]
 pub async fn autodiscover_json() 
 -> Result<HttpResponse> {
     HttpResponse::Ok()
@@ -39,7 +38,6 @@ pub async fn autodiscover_json()
         .await
 }
 
-#[get("/email/mobileconfig")]
 pub async fn mobileconfig(
     getdata: web::Query<HashMap<String, String>>,
 ) -> Result<HttpResponse> {
@@ -61,7 +59,6 @@ pub async fn mobileconfig(
         .await
 }
 
-#[get("/autodiscover/autodiscover.xml")]
 pub async fn autodiscover_xml_get(
     getdata: web::Query<HashMap<String, String>>,
 ) -> Result<HttpResponse> {
@@ -82,7 +79,6 @@ pub async fn autodiscover_xml_get(
         .await
 }
 
-#[post("/autodiscover/autodiscover.xml")]
 pub async fn autodiscover_xml_post(
     raw_post: web::Bytes,
     getdata: web::Query<HashMap<String, String>>,
