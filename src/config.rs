@@ -1,8 +1,8 @@
+use crate::serde::de::Error;
+use serde::{Deserialize, Deserializer};
+use std::fmt;
 use std::fs::File;
 use std::io::Read;
-use std::fmt;
-use serde::{Deserialize, Deserializer};
-use crate::serde::de::Error;
 
 lazy_static! {
     pub static ref CONFIG: Config = Config::init();
@@ -10,7 +10,9 @@ lazy_static! {
 
 #[derive(Deserialize, Debug)]
 pub enum EncryptionType {
-    None, SSL, StartTLS
+    None,
+    SSL,
+    StartTLS,
 }
 
 impl fmt::Display for EncryptionType {
@@ -21,7 +23,8 @@ impl fmt::Display for EncryptionType {
 
 #[derive(Deserialize, Debug)]
 pub enum LoginType {
-    Localpart, EmailDom
+    Localpart,
+    EmailDom,
 }
 
 impl fmt::Display for LoginType {
@@ -31,7 +34,8 @@ impl fmt::Display for LoginType {
 }
 
 fn deser_logintype<'a, D>(de: D) -> Result<LoginType, D::Error>
-    where D: Deserializer<'a>
+where
+    D: Deserializer<'a>,
 {
     let s: String = Deserialize::deserialize(de)?;
     match s.to_lowercase().as_ref() {
@@ -42,14 +46,18 @@ fn deser_logintype<'a, D>(de: D) -> Result<LoginType, D::Error>
 }
 
 fn deser_encryptiontype<'a, D>(de: D) -> Result<EncryptionType, D::Error>
-    where D: Deserializer<'a>
+where
+    D: Deserializer<'a>,
 {
     let s: String = Deserialize::deserialize(de)?;
     match s.to_lowercase().as_ref() {
         "none" => Ok(EncryptionType::None),
         "ssl" => Ok(EncryptionType::SSL),
         "starttls" => Ok(EncryptionType::StartTLS),
-        other => Err(D::Error::custom(format!("unknown encryption type: {}", other))),
+        other => Err(D::Error::custom(format!(
+            "unknown encryption type: {}",
+            other
+        ))),
     }
 }
 
@@ -188,13 +196,12 @@ pub struct Config {
 
 impl Config {
     pub fn init() -> Self {
-        let mut conffile = File::open("config.toml").expect(
-            "Config file config.toml not found."
-        );
+        let mut conffile = File::open("config.toml").expect("Config file config.toml not found.");
         let mut confstr = String::new();
         conffile
             .read_to_string(&mut confstr)
             .expect("Couldn't read config to string");
-        toml::from_str(&confstr).expect("The configuration file seems invalid. Please double check it!")
+        toml::from_str(&confstr)
+            .expect("The configuration file seems invalid. Please double check it!")
     }
 }

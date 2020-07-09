@@ -1,51 +1,49 @@
-use actix_web::{web, http, HttpResponse, Result};
+use actix_web::{http, web, HttpResponse, Result};
 use askama::Template;
 use std::collections::HashMap;
 
 use crate::config::*;
-use crate::structs::*;
 use crate::helpers::*;
+use crate::structs::*;
 
-pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>)
-    -> Result<HttpResponse> {
-        let mut tpl = 
-            AutoConfig { c: &CONFIG }
-            .render()
-            .expect("Failed to render template");
-        // support thunderbird's special gimmick
-        if let Some(addr) = getdata.get("emailaddress") {
-            tpl = tpl.replace("%EMAILADDRESS%", addr)
-                .replace("%EMAILLOCALPART%", addr.split('@').collect::<Vec<&str>>()[0]);
-        }
+pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>) -> Result<HttpResponse> {
+    let mut tpl = AutoConfig { c: &CONFIG }
+        .render()
+        .expect("Failed to render template");
+    // support thunderbird's special gimmick
+    if let Some(addr) = getdata.get("emailaddress") {
+        tpl = tpl.replace("%EMAILADDRESS%", addr).replace(
+            "%EMAILLOCALPART%",
+            addr.split('@').collect::<Vec<&str>>()[0],
+        );
+    }
 
-    HttpResponse::Ok()
-        .content_type("text/xml")
-        .body(tpl)
-        .await
+    HttpResponse::Ok().content_type("text/xml").body(tpl).await
 }
 
-pub async fn autodiscover_json() 
--> Result<HttpResponse> {
+pub async fn autodiscover_json() -> Result<HttpResponse> {
     HttpResponse::Ok()
         .content_type("application/json")
         .body(
-            AutoDiscoverJson {
-                c: &CONFIG,
-            }
-            .render()
-            .expect("Failed to render template"),
+            AutoDiscoverJson { c: &CONFIG }
+                .render()
+                .expect("Failed to render template"),
         )
         .await
 }
 
-pub async fn mobileconfig(
-    getdata: web::Query<HashMap<String, String>>,
-) -> Result<HttpResponse> {
+pub async fn mobileconfig(getdata: web::Query<HashMap<String, String>>) -> Result<HttpResponse> {
     let email = get_email_address(None, getdata.into_inner());
 
     HttpResponse::Ok()
         .content_type("application/x-apple-aspen-config; charset=utf-8")
-        .header(http::header::CONTENT_DISPOSITION, format!("attachment; filename={}.mobileconfig", &CONFIG.general.domain))
+        .header(
+            http::header::CONTENT_DISPOSITION,
+            format!(
+                "attachment; filename={}.mobileconfig",
+                &CONFIG.general.domain
+            ),
+        )
         .body(
             MobileConfigXml {
                 c: &CONFIG,
