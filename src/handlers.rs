@@ -52,6 +52,8 @@ pub async fn mobileconfig(
             MobileConfigXml {
                 c: &CONFIG,
                 email: &email,
+                uuid: &gen_uuid(),
+                uuid_2: &gen_uuid(),
             }
             .render()
             .expect("Failed to render template"),

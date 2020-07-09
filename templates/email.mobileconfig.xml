@@ -1,81 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict>
-	<key>HasRemovalPasscode</key>
-	<false/>
-	<key>PayloadContent</key>
-	<array>
-		<dict>
-			<key>EmailAccountDescription</key>
-            <string>{{ c.mobileconfig.description|safe }}</string>
-			<key>EmailAccountName</key>
-			<string>{{ email }}</string>
-			<key>EmailAccountType</key>
-			<string>EmailTypeIMAP</string>
-			<key>EmailAddress</key>
-			<string>{{ email }}</string>
-            {% if c.imaps.enabled -%}
-			<key>IncomingMailServerAuthentication</key>
-			<string>EmailAuthPassword</string>
-			<key>IncomingMailServerHostName</key>
-			<string>{{ c.imaps.hostname }}</string>
-			<key>IncomingMailServerPortNumber</key>
-			<integer>{{ c.imaps.port }}</integer>
-			<key>IncomingMailServerUseSSL</key>
-			<true/>
-			<key>IncomingMailServerUsername</key>
-            <string>{{ email }}</string>
-            {% endif %}
-            {% if c.smtps.enabled -%}
-			<key>OutgoingMailServerAuthentication</key>
-			<string>EmailAuthPassword</string>
-			<key>OutgoingMailServerHostName</key>
-			<string>{{ c.smtps.hostname }}</string>
-			<key>OutgoingMailServerPortNumber</key>
-			<integer>{{ c.smtps.port }}</integer>
-			<key>OutgoingMailServerUseSSL</key>
-			<true/>
-			<key>OutgoingMailServerUsername</key>
-			<string>{{ email }}</string>
-			<key>OutgoingPasswordSameAsIncomingPassword</key>
-			<true/>
-            {% endif -%}
-			<key>PayloadDescription</key>
-            <string>{{ c.mobileconfig.description|safe }}</string>
-			<key>PayloadDisplayName</key>
-			<string>{{ email }}</string>
-			<key>PayloadIdentifier</key>
-			<string>fr.42l.autodiscover.com.apple.mail.managed.C818BE0C-BDB4-44B2-B993-9FB79B2AB6D3</string>
-			<key>PayloadType</key>
-			<string>com.apple.mail.managed</string>
-			<key>PayloadUUID</key>
-			<string>C818BE0C-BDB4-44B2-B993-9FB79B2AB6D3</string>
-			<key>PayloadVersion</key>
-			<real>1</real>
-			<key>SMIMEEnablePerMessageSwitch</key>
-			<false/>
-			<key>SMIMEEnabled</key>
-			<false/>
-			<key>disableMailRecentsSyncing</key>
-            <false/>
-		</dict>
-	</array>
-	<key>PayloadDescription</key>
-    <string>{{ c.mobileconfig.description|safe }}</string>
-	<key>PayloadDisplayName</key>
-	<string>{{ email }}</string>
-	<key>PayloadIdentifier</key>
-	<string>fr.42l.autodiscover</string>
-	<key>PayloadOrganization</key>
-	<string>{{ c.general.domain }}</string>
-	<key>PayloadRemovalDisallowed</key>
-	<false/>
-	<key>PayloadType</key>
-	<string>Configuration</string>
-	<key>PayloadUUID</key>
-	<string>F0E72ED6-4F1C-46D7-BE0C-185A5E449162</string>
-	<key>PayloadVersion</key>
-	<integer>1</integer>
-</dict>
+    <dict>
+        <key>HasRemovalPasscode</key>
+        <false/>
+        <key>PayloadContent</key>
+        <array>
+            <dict>
+                <key>EmailAccountDescription</key>
+                <string>{{ c.mobileconfig.description|safe }}</string>
+                <key>EmailAccountType</key>
+                <string>EmailTypeIMAP</string>
+                <key>EmailAddress</key>
+                <string>{{ email }}</string>
+                    {% if c.imaps.enabled -%}
+                <key>IncomingMailServerAuthentication</key>
+                <string>EmailAuthPassword</string>
+                <key>IncomingMailServerHostName</key>
+                <string>{{ c.imaps.hostname }}</string>
+                <key>IncomingMailServerPortNumber</key>
+                <integer>{{ c.imaps.port }}</integer>
+                <key>IncomingMailServerUseSSL</key>
+                <true/>
+                <key>IncomingMailServerUsername</key>
+                <string>{{ email }}</string>
+                    {% endif %}
+                    {% if c.smtps.enabled -%}
+                <key>OutgoingMailServerAuthentication</key>
+                <string>EmailAuthPassword</string>
+                <key>OutgoingMailServerHostName</key>
+                <string>{{ c.smtps.hostname }}</string>
+                <key>OutgoingMailServerPortNumber</key>
+                <integer>{{ c.smtps.port }}</integer>
+                <key>OutgoingMailServerUseSSL</key>
+                <true/>
+                <key>OutgoingMailServerUsername</key>
+                <string>{{ email }}</string>
+                <key>OutgoingPasswordSameAsIncomingPassword</key>
+                <true/>
+                    {% endif -%}
+                <key>PayloadDescription</key>
+                <string>{{ c.mobileconfig.description|safe }}</string>
+                <key>PayloadDisplayName</key>
+                <string>{{ email }}</string>
+                <key>PayloadIdentifier</key>
+                <string>fr.42l.autodiscover.com.apple.mail.managed.{{ uuid }}</string>
+                <key>PayloadType</key>
+                <string>com.apple.mail.managed</string>
+                <key>PayloadUUID</key>
+                <string>{{ uuid }}</string>
+                <key>PayloadVersion</key>
+                <real>1</real>
+                <key>SMIMEEnablePerMessageSwitch</key>
+                <false/>
+                <key>SMIMEEnabled</key>
+                <false/>
+                <key>disableMailRecentsSyncing</key>
+                <false/>
+            </dict>
+        </array>
+        <key>PayloadDescription</key>
+        <string>{{ c.mobileconfig.description|safe }}</string>
+        <key>PayloadDisplayName</key>
+        <string>{{ email }}</string>
+        <key>PayloadIdentifier</key>
+        <string>fr.42l.autodiscover.{{ uuid_2 }}</string>
+        <key>PayloadOrganization</key>
+        <string>{{ c.general.domain }}</string>
+        <key>PayloadRemovalDisallowed</key>
+        <false/>
+        <key>PayloadType</key>
+        <string>Configuration</string>
+        <key>PayloadUUID</key>
+        <string>{{ uuid_2 }}</string>
+        <key>PayloadVersion</key>
+        <integer>1</integer>
+    </dict>
 </plist>

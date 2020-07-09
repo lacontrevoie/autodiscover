@@ -87,3 +87,9 @@ pub fn get_email_address(postdata: Option<AutoDiscoverRequest>,
         "email@example.com".to_owned()
     }
 }
+
+pub fn gen_uuid() -> String {
+    use uuid::Uuid;
+
+    Uuid::new_v4().to_hyphenated().to_string()
+}

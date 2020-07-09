@@ -14,6 +14,8 @@ pub struct AutoConfig {
 pub struct MobileConfigXml<'a> {
     pub c: &'static Config,
     pub email: &'a str,
+    pub uuid: &'a str,
+    pub uuid_2: &'a str,
 }
 
 #[derive(Template)]
