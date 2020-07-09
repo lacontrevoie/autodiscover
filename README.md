@@ -8,7 +8,7 @@ With Thunderbird and software using the same standards, you can just use the [au
 
 Outlook uses an undocumented, proprietary protocol called **Autodiscover**, that is made to only work on Outlook Exchange servers. This software attempts to reimplement this protocol, so your free-software based mail server works out-of-the-box with Outlook clients.
 
-Apple mobile phones uses the mobileconfig file which is again, poorly documented.
+Apple mobile phones uses the mobileconfig file which is documented but very messy and incompatible with other "usual" installation methods.
 
 ## Supported clients
 - Thunderbird
@@ -50,7 +50,7 @@ _pop3s._tcp         86400 IN SRV    0 0 995 mail.mydomain.com.
 _smtp._tcp          86400 IN SRV    0 0 25 mail.mydomain.com.
 _smtps._tcp         86400 IN SRV    0 0 465 mail.mydomain.com.
 _submission._tcp    86400 IN SRV    0 0 587 mail.mydomain.com.
-_autodiscover._tcp  86400 IN SRV 	5 0 443 autodiscover.mydomain.com
+_autodiscover._tcp  86400 IN SRV    5 0 443 autodiscover.mydomain.com
 ```
 
 #### On a "customer" domain
