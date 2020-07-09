@@ -7,7 +7,7 @@ mod structs;
 mod handlers;
 mod helpers;
 
-use actix_web::{App, HttpServer};
+use actix_web::{App, HttpServer, web};
 
 use crate::config::*;
 use crate::handlers::*;
@@ -19,7 +19,8 @@ async fn main() -> std::io::Result<()> {
     println!("Autodiscover running for {}", &CONFIG.general.full_name);
     
     HttpServer::new(move || App::new()
-        .service(autoconfig)
+        .route("/mail/config-v1.1.xml", web::to(autoconfig))
+        .route("/.well-known/autoconfig/mail/config-v1.1.xml", web::to(autoconfig))
         .service(autodiscover_xml_get)
         .service(autodiscover_xml_post)
         .service(autodiscover_json)
