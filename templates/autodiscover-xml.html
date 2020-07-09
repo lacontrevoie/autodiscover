@@ -13,10 +13,10 @@
 				<TTL>1</TTL>
 				<Port>{{ c.imaps.port }}</Port>
                 <LoginName>{{ email }}</LoginName>
-                {%- match c.imaps.login -%}
-                  {%- when LoginType::Localpart -%}
+                {%- match c.imaps.login %}
+                  {%- when LoginType::Localpart %}
 				<DomainRequired>off</DomainRequired>
-                  {%- when LoginType::EmailDom -%}
+                  {%- when LoginType::EmailDom %}
 				<DomainRequired>on</DomainRequired>
                 {%- endmatch %}
                 <DomainName>{{ c.imaps.hostname }}</DomainName>
@@ -43,10 +43,10 @@
 				<TTL>1</TTL>
 				<Port>{{ c.smtps.port }}</Port>
                 <LoginName>{{ email }}</LoginName>
-                {%- match c.smtps.login -%}
-                  {%- when LoginType::Localpart -%}
+                {%- match c.smtps.login %}
+                  {%- when LoginType::Localpart %}
 				<DomainRequired>off</DomainRequired>
-                  {%- when LoginType::EmailDom -%}
+                  {%- when LoginType::EmailDom %}
 				<DomainRequired>on</DomainRequired>
                 {%- endmatch %}
                 <DomainName>{{ c.smtps.hostname }}</DomainName>
