@@ -17,22 +17,46 @@ pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
     loop {
         match reader.read_event(&mut buf) {
             Ok(Event::Text(e)) => txt.push(e.unescape_and_decode(&reader).unwrap()),
-            Ok(Event::Eof) => break AutoDiscoverRequest {
-                EMailAddress: match txt.get(0) {
-                    Some (a) => Some(a.to_owned()),
-                    None => None,
-                },
-                AcceptableResponseSchema: match txt.get(1) {
-                    Some (b) => Some(b.to_owned()),
-                    None => None,
-                },
-            }, // exits the loop when reaching end of file
+            Ok(Event::Eof) => break {
+                // dirty trick
+                let field1 = txt.get(0);
+                let field2 = txt.get(1);
+
+                if field1.is_some() && field2.is_some() {
+                    if field1.unwrap().contains('@') {
+                        AutoDiscoverRequest {
+                            EMailAddress: Some(field1.unwrap().to_owned()),
+                            AcceptableResponseSchema: Some(field2.unwrap().to_owned()),
+                        }
+                    } else {
+                        AutoDiscoverRequest {
+                            EMailAddress: Some(field2.unwrap().to_owned()),
+                            AcceptableResponseSchema: Some(field1.unwrap().to_owned()),
+                        }
+                    }
+                } else {
+                    AutoDiscoverRequest {
+                        EMailAddress: None,
+                        AcceptableResponseSchema: None
+                    }
+                }
+            },
+            /*break AutoDiscoverRequest {
+              EMailAddress: match txt.get(0) {
+              Some (a) => Some(a.to_owned()),
+              None => None,
+              },
+              AcceptableResponseSchema: match txt.get(1) {
+              Some (b) => Some(b.to_owned()),
+              None => None,
+              },
+              }, // exits the loop when reaching end of file */
             Err(e) => panic!("Error at position {}: {:?}", reader.buffer_position(), e),
             _ => (), // There are several other `Event`s we do not consider here
         }
         buf.clear();
-        }
     }
+}
 
 pub fn get_schema(postdata: Option<AutoDiscoverRequest>) -> String {
     let default_sch = "http://schemas.microsoft.com/exchange/autodiscover/outlook/responseschema/2006a";
