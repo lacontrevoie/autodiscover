@@ -6,7 +6,6 @@ use crate::config::*;
 use crate::structs::*;
 use crate::helpers::*;
 
-#[get("/mail/config-v1.1.xml")]
 pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>)
     -> Result<HttpResponse> {
         let mut tpl = 
@@ -25,7 +24,7 @@ pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>)
         .await
 }
 
-#[get("/Autodiscover/Autodiscover.json")]
+#[get("/autodiscover/autodiscover.json")]
 pub async fn autodiscover_json() 
 -> Result<HttpResponse> {
     HttpResponse::Ok()
@@ -81,7 +80,7 @@ pub async fn autodiscover_xml_get(
         .await
 }
 
-#[post("/Autodiscover/Autodiscover.xml")]
+#[post("/autodiscover/autodiscover.xml")]
 pub async fn autodiscover_xml_post(
     raw_post: web::Bytes,
     getdata: web::Query<HashMap<String, String>>,
