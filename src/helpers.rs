@@ -80,7 +80,7 @@ pub fn get_email_address(
     // first tries to parse POST data, then GET(EMailAddress), then GET(email)
     if let Some(v) = postdata {
         if let Some(w) = v.EMailAddress {
-            return w.to_owned();
+            return w;
         }
     }
 
