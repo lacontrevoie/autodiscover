@@ -34,19 +34,19 @@ async fn main() -> std::io::Result<()> {
             )
             .route(
                 "/autodiscover/autodiscover.xml",
-                web::to(autodiscover_xml_get),
+                web::get().to(autodiscover_xml_get),
             )
             .route(
                 "/Autodiscover/Autodiscover.xml",
-                web::to(autodiscover_xml_get),
+                web::get().to(autodiscover_xml_get),
             )
             .route(
                 "/autodiscover/autodiscover.xml",
-                web::to(autodiscover_xml_post),
+                web::post().to(autodiscover_xml_post),
             )
             .route(
                 "/Autodiscover/Autodiscover.xml",
-                web::to(autodiscover_xml_post),
+                web::post().to(autodiscover_xml_post),
             )
             .route("/email/mobileconfig", web::to(mobileconfig))
     })

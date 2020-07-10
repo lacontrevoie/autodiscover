@@ -80,9 +80,11 @@ pub async fn autodiscover_xml_get(
 pub async fn autodiscover_xml_post(
     raw_post: web::Bytes,
     getdata: web::Query<HashMap<String, String>>,
+    req: web::HttpRequest,
 ) -> Result<HttpResponse> {
-    let xml_post = read_xml(raw_post);
 
+    let xml_post = read_xml(raw_post);
+    
     let schema = get_schema(Some(xml_post.clone()));
     let email = get_email_address(Some(xml_post), getdata.into_inner());
 
