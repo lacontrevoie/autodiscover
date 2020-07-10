@@ -13,7 +13,10 @@ Apple mobile phones uses the mobileconfig file which is documented but very mess
 ## Supported clients
 - Thunderbird
 - Apple Mail
-- (Not yet tested) Outlook clients
+- Outlook clients (2003, 2007, 2010, 2013) – **not tested yet**
+
+### Unsupported (yet)
+- Outlook clients (2016, 2019, Office 365), using Autodiscover V2 protocol
 
 ## Setup
 
