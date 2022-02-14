@@ -18,31 +18,30 @@ pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>) -> Result<
         );
     }
 
-    HttpResponse::Ok().content_type("text/xml").body(tpl).await
+    Ok(HttpResponse::Ok().content_type("text/xml").body(tpl))
 }
 
 pub async fn autodiscover_json() -> Result<HttpResponse> {
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok()
         .content_type("application/json")
         .body(
             AutoDiscoverJson { c: &CONFIG }
                 .render()
                 .expect("Failed to render template"),
-        )
-        .await
+        ))
 }
 
 pub async fn mobileconfig(getdata: web::Query<HashMap<String, String>>) -> Result<HttpResponse> {
     let email = get_email_address(None, getdata.into_inner());
 
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok()
         .content_type("application/x-apple-aspen-config; charset=utf-8")
-        .header(
+        .insert_header((
             http::header::CONTENT_DISPOSITION,
             format!(
                 "attachment; filename={}.mobileconfig",
                 &CONFIG.general.domain
-            ),
+            ))
         )
         .body(
             MobileConfigXml {
@@ -53,8 +52,7 @@ pub async fn mobileconfig(getdata: web::Query<HashMap<String, String>>) -> Resul
             }
             .render()
             .expect("Failed to render template"),
-        )
-        .await
+        ))
 }
 
 pub async fn autodiscover_xml_get(
@@ -63,7 +61,7 @@ pub async fn autodiscover_xml_get(
     let schema = get_schema(None);
     let email = get_email_address(None, getdata.into_inner());
 
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok()
         .content_type("text/xml")
         .body(
             AutoDiscoverXml {
@@ -73,14 +71,12 @@ pub async fn autodiscover_xml_get(
             }
             .render()
             .expect("Failed to render template"),
-        )
-        .await
+        ))
 }
 
 pub async fn autodiscover_xml_post(
     raw_post: web::Bytes,
     getdata: web::Query<HashMap<String, String>>,
-    req: web::HttpRequest,
 ) -> Result<HttpResponse> {
 
     let xml_post = read_xml(raw_post);
@@ -88,7 +84,7 @@ pub async fn autodiscover_xml_post(
     let schema = get_schema(Some(xml_post.clone()));
     let email = get_email_address(Some(xml_post), getdata.into_inner());
 
-    HttpResponse::Ok()
+    Ok(HttpResponse::Ok()
         .content_type("text/xml")
         .body(
             AutoDiscoverXml {
@@ -98,6 +94,5 @@ pub async fn autodiscover_xml_post(
             }
             .render()
             .expect("Failed to render template"),
-        )
-        .await
+        ))
 }
