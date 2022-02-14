@@ -22,13 +22,11 @@ pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>) -> Result<
 }
 
 pub async fn autodiscover_json() -> Result<HttpResponse> {
-    Ok(HttpResponse::Ok()
-        .content_type("application/json")
-        .body(
-            AutoDiscoverJson { c: &CONFIG }
-                .render()
-                .expect("Failed to render template"),
-        ))
+    Ok(HttpResponse::Ok().content_type("application/json").body(
+        AutoDiscoverJson { c: &CONFIG }
+            .render()
+            .expect("Failed to render template"),
+    ))
 }
 
 pub async fn mobileconfig(getdata: web::Query<HashMap<String, String>>) -> Result<HttpResponse> {
@@ -41,8 +39,8 @@ pub async fn mobileconfig(getdata: web::Query<HashMap<String, String>>) -> Resul
             format!(
                 "attachment; filename={}.mobileconfig",
                 &CONFIG.general.domain
-            ))
-        )
+            ),
+        ))
         .body(
             MobileConfigXml {
                 c: &CONFIG,
@@ -61,38 +59,33 @@ pub async fn autodiscover_xml_get(
     let schema = get_schema(None);
     let email = get_email_address(None, getdata.into_inner());
 
-    Ok(HttpResponse::Ok()
-        .content_type("text/xml")
-        .body(
-            AutoDiscoverXml {
-                c: &CONFIG,
-                schema: &schema,
-                email: &email,
-            }
-            .render()
-            .expect("Failed to render template"),
-        ))
+    Ok(HttpResponse::Ok().content_type("text/xml").body(
+        AutoDiscoverXml {
+            c: &CONFIG,
+            schema: &schema,
+            email: &email,
+        }
+        .render()
+        .expect("Failed to render template"),
+    ))
 }
 
 pub async fn autodiscover_xml_post(
     raw_post: web::Bytes,
     getdata: web::Query<HashMap<String, String>>,
 ) -> Result<HttpResponse> {
-
     let xml_post = read_xml(raw_post);
-    
+
     let schema = get_schema(Some(xml_post.clone()));
     let email = get_email_address(Some(xml_post), getdata.into_inner());
 
-    Ok(HttpResponse::Ok()
-        .content_type("text/xml")
-        .body(
-            AutoDiscoverXml {
-                c: &CONFIG,
-                schema: &schema,
-                email: &email,
-            }
-            .render()
-            .expect("Failed to render template"),
-        ))
+    Ok(HttpResponse::Ok().content_type("text/xml").body(
+        AutoDiscoverXml {
+            c: &CONFIG,
+            schema: &schema,
+            email: &email,
+        }
+        .render()
+        .expect("Failed to render template"),
+    ))
 }

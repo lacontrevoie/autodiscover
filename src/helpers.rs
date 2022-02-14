@@ -41,7 +41,7 @@ pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
                             AcceptableResponseSchema: None,
                         }
                     }
-                }
+                };
             }
             /*break AutoDiscoverRequest {
             EMailAddress: match txt.get(0) {
