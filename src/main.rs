@@ -12,7 +12,7 @@ use actix_web::{web, App, HttpServer};
 use crate::config::*;
 use crate::handlers::*;
 
-#[actix_rt::main]
+#[actix_web::main]
 async fn main() -> std::io::Result<()> {
     println!("Reading configuration file...");
     println!("Autodiscover running for {}", &CONFIG.general.full_name);
