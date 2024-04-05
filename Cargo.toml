@@ -7,10 +7,10 @@ edition = "2021"
 
 [dependencies]
 once_cell = "1.19"
-toml = "0.5"
-actix-web = "4.0.0-rc.3"
-askama = "0.11"
+toml = { version = "0.8", default-features = false, features = [ "parse" ] }
+actix-web = { version = "4.5", default-features = false, features = [ "macros", "http2" ] }
+askama = "0.12"
 serde = "1.0"
 serde_derive = "1.0"
-quick-xml = "0.22"
-uuid = { version = "0.8", features = ["v4"] }
+quick-xml = "0.31"
+uuid = { version = "1.8", features = ["v4"] }

@@ -15,8 +15,8 @@ pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
 
     // The `Reader` does not implement `Iterator` because it outputs borrowed data (`Cow`s)
     loop {
-        match reader.read_event(&mut buf) {
-            Ok(Event::Text(e)) => txt.push(e.unescape_and_decode(&reader).unwrap()),
+        match reader.read_event_into(&mut buf) {
+            Ok(Event::Text(e)) => txt.push(e.unescape().unwrap().into_owned()),
             Ok(Event::Eof) => {
                 break {
                     // dirty trick
@@ -96,5 +96,5 @@ pub fn get_email_address(
 pub fn gen_uuid() -> String {
     use uuid::Uuid;
 
-    Uuid::new_v4().to_hyphenated().to_string()
+    Uuid::new_v4().as_hyphenated().to_string()
 }

@@ -1,5 +1,6 @@
 use crate::serde::de::Error;
 use serde::{Deserialize, Deserializer};
+use serde_derive::Deserialize;
 use std::fmt;
 use std::fs::File;
 use std::io::Read;

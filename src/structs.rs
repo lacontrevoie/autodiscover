@@ -1,5 +1,5 @@
 use askama::Template;
-use serde::{Deserialize, Serialize};
+use serde_derive::{Serialize, Deserialize};
 
 use crate::config::*;
 
