@@ -3,10 +3,9 @@ use serde::{Deserialize, Deserializer};
 use std::fmt;
 use std::fs::File;
 use std::io::Read;
+use once_cell::sync::OnceCell;
 
-lazy_static! {
-    pub static ref CONFIG: Config = Config::init();
-}
+pub static CONFIG: OnceCell<Config> = OnceCell::new();
 
 #[derive(Deserialize, Debug)]
 pub enum EncryptionType {

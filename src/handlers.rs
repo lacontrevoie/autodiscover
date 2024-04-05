@@ -7,7 +7,7 @@ use crate::helpers::*;
 use crate::structs::*;
 
 pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>) -> Result<HttpResponse> {
-    let mut tpl = AutoConfig { c: &CONFIG }
+    let mut tpl = AutoConfig { c: &CONFIG.wait() }
         .render()
         .expect("Failed to render template");
     // support thunderbird's special gimmick
@@ -23,7 +23,7 @@ pub async fn autoconfig(getdata: web::Query<HashMap<String, String>>) -> Result<
 
 pub async fn autodiscover_json() -> Result<HttpResponse> {
     Ok(HttpResponse::Ok().content_type("application/json").body(
-        AutoDiscoverJson { c: &CONFIG }
+        AutoDiscoverJson { c: &CONFIG.wait() }
             .render()
             .expect("Failed to render template"),
     ))
@@ -38,12 +38,12 @@ pub async fn mobileconfig(getdata: web::Query<HashMap<String, String>>) -> Resul
             http::header::CONTENT_DISPOSITION,
             format!(
                 "attachment; filename={}.mobileconfig",
-                &CONFIG.general.domain
+                &CONFIG.wait().general.domain
             ),
         ))
         .body(
             MobileConfigXml {
-                c: &CONFIG,
+                c: &CONFIG.wait(),
                 email: &email,
                 uuid: &gen_uuid(),
                 uuid_2: &gen_uuid(),
@@ -61,7 +61,7 @@ pub async fn autodiscover_xml_get(
 
     Ok(HttpResponse::Ok().content_type("text/xml").body(
         AutoDiscoverXml {
-            c: &CONFIG,
+            c: &CONFIG.wait(),
             schema: &schema,
             email: &email,
         }
@@ -81,7 +81,7 @@ pub async fn autodiscover_xml_post(
 
     Ok(HttpResponse::Ok().content_type("text/xml").body(
         AutoDiscoverXml {
-            c: &CONFIG,
+            c: &CONFIG.wait(),
             schema: &schema,
             email: &email,
         }

@@ -1,5 +1,3 @@
-#[macro_use]
-extern crate lazy_static;
 extern crate serde;
 
 mod config;
@@ -15,7 +13,12 @@ use crate::handlers::*;
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     println!("Reading configuration file...");
-    println!("Autodiscover running for {}", &CONFIG.general.full_name);
+
+    CONFIG.set(Config::init())
+        .ok()
+        .expect("Could not load configuration file");
+    
+    println!("Autodiscover running for {}", &CONFIG.wait().general.full_name);
 
     HttpServer::new(move || {
         App::new()
@@ -50,7 +53,7 @@ async fn main() -> std::io::Result<()> {
             )
             .route("/email/mobileconfig", web::to(mobileconfig))
     })
-    .bind(&CONFIG.general.listening_address)?
+    .bind(&CONFIG.wait().general.listening_address)?
     .run()
     .await
 }
