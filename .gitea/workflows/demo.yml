@@ -1,19 +1,36 @@
-name: Gitea Actions Demo
-run-name: ${{ gitea.actor }} is testing out Gitea Actions 🚀
-on: [push]
+name: Build and push
+on: [ push ]
 
 jobs:
-  Explore-Gitea-Actions:
-    runs-on: debian_bookworm
+  release:
+    runs-on: node_bookworm
+    env:
+      DOCKER_ORG: lacontrevoie
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ gitea.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by Gitea!"
-      - run: echo "🔎 The name of your branch is ${{ gitea.ref }} and your repository is ${{ gitea.repository }}."
-      - name: Check out repository code
+      - name: Checkout
         uses: actions/checkout@v4
-      - run: echo "💡 The ${{ gitea.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ gitea.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+
+      - name: Set up Docker Buildx
+        uses: https://github.com/docker/setup-buildx-action@v3
+        with:
+          config-inline: |
+            [registry."git.lacontrevoie.fr"]
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          registry: git.lacontrevoie.fr
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      
+      - name: Build and push
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          platforms: |
+            linux/amd64
+          push: true
+          tags: |
+            git.lacontrevoie.fr/${{ env.DOCKER_ORG }}/autodiscover:latest
+            git.lacontrevoie.fr/${{ env.DOCKER_ORG }}/autodiscover:${{ gitea.sha }}
