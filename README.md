@@ -22,6 +22,33 @@ Apple mobile phones uses the mobileconfig file which is documented but very mess
 
 ### The application
 
+#### Docker
+
+Download the docker image:
+
+```
+docker pull git.lacontrevoie.fr/lacontrevoie/autodiscover:latest
+```
+
+Copy [config.toml](https://git.lacontrevoie.fr/lacontrevoie/autodiscover/src/branch/master/config.toml) in a dedicated folder and fill the values according to your email setup.
+
+Basic docker compose file:
+
+```yml
+services:
+  autodiscover:
+    image: git.lacontrevoie.fr/lacontrevoie/autodiscover:latest
+    volumes:
+      - ./config.toml:/run_dir/config.toml:ro
+    read_only: true
+    security_opt:
+        - no-new-privileges
+```
+
+This software does not need any write access. The Docker image also makes it run with an unprivileged user for hardened security.
+
+#### Manual build
+
 Git clone then build with Cargo, like a regular Rust application.
 
 ### The server

@@ -1,9 +1,9 @@
 [general]
 listening_address = "0.0.0.0:8000"
-domain = "42l.fr"
-full_name = "Association 42l"
-short_name = "42l"
-support_url = "https://42l.fr/Service-mail"
+domain = "lacontrevoie.fr"
+full_name = "La Contre-Voie"
+short_name = "La Contre-Voie"
+support_url = "https://lacontrevoie.fr/services/mail/"
 
 [autodiscover]
 enabled = true
@@ -14,7 +14,7 @@ ttl = 48
 
 [autoconfig]
 enabled = true
-support_descr = "Guide on using the 42l mail service"
+support_descr = "Guide on using the La Contre-Voie mail service"
 
 # Information about the fields below
 # login: "Localpart" (abc) or "EmailDom" (abc@mydomain.fr)
@@ -24,11 +24,11 @@ support_descr = "Guide on using the 42l mail service"
 # If you are unsure about this information, leave the default values
 
 [mobileconfig]
-description = "Email configuration for 42l.fr's mail server"
+description = "Email configuration for La Contre-Voie's mail server"
 
 [imap]
 enabled = true
-hostname = "42l.fr"
+hostname = "mail.42l.fr"
 port = 143
 login = "EmailDom"
 encryption = "starttls"
@@ -37,7 +37,7 @@ standard_password_encryption = false
 
 [imaps]
 enabled = true
-hostname = "42l.fr"
+hostname = "mail.42l.fr"
 port = 993
 login = "EmailDom"
 encryption = "ssl"
@@ -46,7 +46,7 @@ standard_password_encryption = false
 
 [pop]
 enabled = true
-hostname = "42l.fr"
+hostname = "mail.42l.fr"
 port = 110
 login = "EmailDom"
 encryption = "starttls"
@@ -55,7 +55,7 @@ standard_password_encryption = false
 
 [pops]
 enabled = true
-hostname = "42l.fr"
+hostname = "mail.42l.fr"
 port = 995
 login = "EmailDom"
 encryption = "ssl"
@@ -64,7 +64,7 @@ standard_password_encryption = false
 
 [smtp]
 enabled = false
-hostname = "42l.fr"
+hostname = "mail.42l.fr"
 port = 25
 login = "EmailDom"
 encryption = "none"
@@ -73,7 +73,7 @@ standard_password_encryption = false
 
 [smtps]
 enabled = true
-hostname = "42l.fr"
+hostname = "mail.42l.fr"
 port = 465
 login = "EmailDom"
 encryption = "ssl"
@@ -82,7 +82,7 @@ standard_password_encryption = false
 
 [submission]
 enabled = true
-hostname = "42l.fr"
+hostname = "mail.42l.fr"
 port = 587
 login = "EmailDom"
 encryption = "starttls"
