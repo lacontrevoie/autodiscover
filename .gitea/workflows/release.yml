@@ -13,9 +13,9 @@ jobs:
       
       - name: Build and push
         run: |
-          docker buildx build
-          --file ${{ vars.WDIR }}/Dockerfile
-          --platform linux/amd64
-          --tag ${{ vars.DOCKER_REGISTRY }}/${{ gitea.repository }}:latest
-          --tag ${{ vars.DOCKER_REGISTRY }}/${{ gitea.repository }}:${{ gitea.sha }}
+          docker buildx build \
+          --file ${{ vars.WDIR }}/Dockerfile \
+          --platform linux/amd64 \
+          --tag ${{ vars.DOCKER_REGISTRY }}/${{ gitea.repository }}:latest \
+          --tag ${{ vars.DOCKER_REGISTRY }}/${{ gitea.repository }}:${{ gitea.sha }} \
           --push ${{ vars.WDIR }}
