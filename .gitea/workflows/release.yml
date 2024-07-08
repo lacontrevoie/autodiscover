@@ -6,7 +6,7 @@ jobs:
     runs-on: runner_image
     steps:
       - name: Checkout
-        run: git clone {{ gitea.repositoryUrl }} .
+        run: git clone ${{ gitea.repositoryUrl }} .
 
       - name: Set up Docker Buildx
         uses: https://github.com/docker/setup-buildx-action@v3
