@@ -9,7 +9,7 @@ jobs:
         run: git clone ${{ gitea.server_url }}/${{ gitea.repository }} ${{ WDIR }}
 
       - name: Login to Docker registry
-        run: docker login --username {{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} ${{ vars.DOCKER_REGISTRY }}
+        run: docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} ${{ vars.DOCKER_REGISTRY }}
       
       - name: Build and push
         run: |
