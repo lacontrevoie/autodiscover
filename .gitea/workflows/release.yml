@@ -6,16 +6,10 @@ jobs:
     runs-on: runner_image
     steps:
       - name: Checkout
-        run: git clone ${{ gitea.server_url }}/${{ gitea.repository }} ${{ vars.WDIR }}
+        run: /clone.sh ${{ gitea.server_url }} ${{ gitea.repository }}
 
       - name: Login to Docker registry
-        run: docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} ${{ vars.DOCKER_REGISTRY }}
+        run: /login.sh ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_PASSWORD }} ${{ vars.DOCKER_REGISTRY }}
       
       - name: Build and push
-        run: |
-          docker buildx build \
-          --file ${{ vars.WDIR }}/Dockerfile \
-          --platform linux/amd64 \
-          --tag ${{ vars.DOCKER_REGISTRY }}/${{ gitea.repository }}:latest \
-          --tag ${{ vars.DOCKER_REGISTRY }}/${{ gitea.repository }}:${{ gitea.sha }} \
-          --push ${{ vars.WDIR }}
+        run: /build.sh linux/amd64 ${{ vars.DOCKER_REGISTRY }} ${{ gitea.repository }} ${{ gitea.sha }}

@@ -1,4 +1,4 @@
-FROM rust:1-bookworm as builder
+FROM rust:1-bookworm AS builder
 
 WORKDIR /run_dir
 
