@@ -4,6 +4,7 @@ on: [ push ]
 jobs:
   release:
     runs-on: runner_image
+    if: '${{ gitea.ref }}' == 'refs/heads/master'
     steps:
       - name: Checkout
         run: /clone.sh ${{ gitea.server_url }} ${{ gitea.repository }}
