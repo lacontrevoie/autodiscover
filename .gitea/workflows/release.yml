@@ -1,10 +1,13 @@
 name: Build and push
-on: [ push ]
+
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   release:
     runs-on: runner_image
-    if: '${{ gitea.ref }}' == 'refs/heads/master'
     steps:
       - name: Checkout
         run: /clone.sh ${{ gitea.server_url }} ${{ gitea.repository }}
