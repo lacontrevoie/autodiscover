@@ -8,6 +8,7 @@ COPY . .
 
 RUN if [ "$TARGETPLATFORM" = "linux/arm64" ]; then \
         echo "ARM64 version"; \
+        apt update && apt -y install gcc-aarch64-linux-gnu && apt clean; \
         rustup target add aarch64-unknown-linux-gnu; \
         CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-linux-gnu-gcc cargo build --target aarch64-unknown-linux-gnu --release; \
     else \
