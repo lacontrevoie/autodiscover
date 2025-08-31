@@ -23,7 +23,7 @@ WORKDIR /run_dir
 
 COPY --from=builder /run_dir/target/release/autodiscover ./autodiscover
 
-RUN adduser --disabled-password --gecos "" --no-create-home "unprivileged"
+RUN useradd "unprivileged"
 
 USER unprivileged
 
