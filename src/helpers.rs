@@ -8,7 +8,7 @@ use crate::structs::*;
 
 pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
     let mut reader = Reader::from_reader(Cursor::new(data));
-    reader.trim_text(true);
+    reader.config_mut().trim_text(true);
 
     let mut txt = Vec::new();
     let mut buf = Vec::new();
@@ -16,7 +16,7 @@ pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
     // The `Reader` does not implement `Iterator` because it outputs borrowed data (`Cow`s)
     loop {
         match reader.read_event_into(&mut buf) {
-            Ok(Event::Text(e)) => txt.push(e.unescape().unwrap().into_owned()),
+            Ok(Event::Text(e)) => txt.push(e.decode().unwrap().into_owned()),
             Ok(Event::Eof) => {
                 break {
                     // dirty trick
