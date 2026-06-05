@@ -25,7 +25,7 @@
                 {% else -%}
                 <SPA>off</SPA>
                 {% endif -%}
-                {% if c.imaps.encryption|lower != "none" -%}
+                {% if c.imaps.encryption != EncryptionType::None -%}
                 <SSL>on</SSL>
                 {% else -%}
                 <SSL>off</SSL>
@@ -55,7 +55,7 @@
                 {% else -%}
                 <SPA>off</SPA>
                 {% endif -%}
-                {% if c.smtps.encryption|lower != "none" -%}
+                {% if c.smtps.encryption != EncryptionType::None -%}
                 <SSL>on</SSL>
                 {% else -%}
                 <SSL>off</SSL>

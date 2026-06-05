@@ -7,7 +7,7 @@ use once_cell::sync::OnceCell;
 
 pub static CONFIG: OnceCell<Config> = OnceCell::new();
 
-#[derive(Deserialize, Debug)]
+#[derive(PartialEq, Deserialize, Debug)]
 pub enum EncryptionType {
     None,
     SSL,
