@@ -26,6 +26,7 @@ async fn main() -> std::io::Result<()> {
 
     HttpServer::new(move || {
         App::new()
+            .app_data(web::PayloadConfig::new(65535))
             .route("/mail/config-v1.1.xml", web::to(autoconfig))
             .route(
                 "/.well-known/autoconfig/mail/config-v1.1.xml",
