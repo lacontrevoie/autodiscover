@@ -3,10 +3,23 @@ use quick_xml::events::Event;
 use quick_xml::Reader;
 use std::collections::HashMap;
 use std::io::Cursor;
+use crate::errors::ServerError;
 
 use crate::structs::*;
 
-pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
+pub fn illegal_char_check(s: &str) -> Result<(), ServerError> {
+    if s.chars().all(|c| {
+        !c.is_control()
+            && !c.is_whitespace()
+            && !matches!(c, '<' | '>' | '"' | '\'' | '&' | '\\' | '/' | ',' | ';')
+    }) {
+        Ok(())
+    } else {
+        Err(ServerError::IllegalCharsDetected)
+    }
+}
+
+pub fn read_xml(data: Bytes) -> Result<AutoDiscoverRequest, ServerError> {
     let mut reader = Reader::from_reader(Cursor::new(data));
     reader.config_mut().trim_text(true);
 
@@ -16,7 +29,7 @@ pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
     // The `Reader` does not implement `Iterator` because it outputs borrowed data (`Cow`s)
     loop {
         match reader.read_event_into(&mut buf) {
-            Ok(Event::Text(e)) => txt.push(e.decode().unwrap().into_owned()),
+            Ok(Event::Text(e)) => txt.push(e.decode().map_err(|_| ServerError::DecodeXmlFail)?.into_owned()),
             Ok(Event::Eof) => {
                 break {
                     // dirty trick
@@ -25,21 +38,21 @@ pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
 
                     if field1.is_some() && field2.is_some() {
                         if field1.unwrap().contains('@') {
-                            AutoDiscoverRequest {
+                            Ok(AutoDiscoverRequest {
                                 EMailAddress: Some(field1.unwrap().to_owned()),
                                 AcceptableResponseSchema: Some(field2.unwrap().to_owned()),
-                            }
+                            })
                         } else {
-                            AutoDiscoverRequest {
+                            Ok(AutoDiscoverRequest {
                                 EMailAddress: Some(field2.unwrap().to_owned()),
                                 AcceptableResponseSchema: Some(field1.unwrap().to_owned()),
-                            }
+                            })
                         }
                     } else {
-                        AutoDiscoverRequest {
+                        Ok(AutoDiscoverRequest {
                             EMailAddress: None,
                             AcceptableResponseSchema: None,
-                        }
+                        })
                     }
                 };
             }
@@ -53,7 +66,11 @@ pub fn read_xml(data: Bytes) -> AutoDiscoverRequest {
             None => None,
             },
             }, // exits the loop when reaching end of file */
-            Err(e) => panic!("Error at position {}: {:?}", reader.buffer_position(), e),
+            Err(e) => {
+                eprintln!("Error at position {}: {:?}", reader.buffer_position(), e);
+                break Err(ServerError::ReadXmlFail)
+                //panic!("Error at position {}: {:?}", reader.buffer_position(), e),
+            }
             _ => (), // There are several other `Event`s we do not consider here
         }
         buf.clear();

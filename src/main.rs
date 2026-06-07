@@ -5,6 +5,7 @@ extern crate serde;
 extern crate serde_derive;
 
 mod config;
+mod errors;
 mod handlers;
 mod helpers;
 mod structs;
